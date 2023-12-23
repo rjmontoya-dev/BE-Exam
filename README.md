@@ -1,6 +1,6 @@
 ### Project Description
 This project is an implementation of the AdminLTE v3 admin template, featuring a sidebar and container layout similar to the provided template.
-
+Template: https://adminlte.io/themes/v3
 ### Features:
 Authentication: Utilizes Laravel Jetstream for authentication with the added functionality of "Remember Me."
 
