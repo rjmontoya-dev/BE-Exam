@@ -32,7 +32,7 @@ const links = [
 </script>
 
 <template>
-    <div class=" w-[16rem] h-screen hidden sm:block  bg-gray-700    ">
+    <div class="fixed  w-[16rem] h-screen hidden sm:block  bg-gray-700    ">
         <div class="text-center mt-2 font-extrabold text-white text-[24px]">
             <h1>ADMIN PANEL</h1>
         </div>

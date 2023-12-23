@@ -53,7 +53,6 @@ const submit = () => {
         const passwordValue = getCookie('password');
         form.email = emailValue;
         form.password = passwordValue;
-        form.remember = true;
     }
 
 onMounted(()=>{

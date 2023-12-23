@@ -24,7 +24,7 @@ class ProductController extends Controller
                 $query->where('category', 'LIKE', "%{$queryString}%");
             });
         })
-        ->orderBy('created_at','desc')
+        ->orderBy('created_at','asc')
         ->paginate(5)
         ->withQueryString();
         return response()->json([

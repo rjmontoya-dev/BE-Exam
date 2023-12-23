@@ -15,7 +15,7 @@ defineProps({
                     <div class="px-4 pb-4">
                         <slot name="page-header"/>
                     </div>
-                    <main class="overflow-y-auto max-h-[calc(110vh-7rem)] px-8 text-slate-700 mt-20 ">
+                    <main class="overflow-y-auto max-h-[calc(110vh-7rem)] fixed  right-0 z-1 w-[calc(170vh)] px-8 text-slate-700 mt-20 ">
                         <slot/>
                     </main>
                 </div>
