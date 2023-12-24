@@ -8,6 +8,8 @@ use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ProductController extends Controller
 {
@@ -32,43 +34,55 @@ class ProductController extends Controller
         ]);
     }
     public function store(StoreProductRequest $request){
-        $product = Product::create([
-            'name'=>$request->name,
-            'category'=>$request->category,
-            'description'=>$request->description,
-            'created_at'=>$request->date_time,
-        ]);
-        if ($images = $request->file('images')) {
-            foreach ($images as $image) {
-                $product->addMedia($image)
-                    ->usingName($product->name)
-                    ->toMediaCollection('images');
+       try{
+        DB::beginTransaction();
+            $product = Product::create([
+                'name'=>$request->name,
+                'category'=>$request->category,
+                'description'=>$request->description,
+                'created_at'=>$request->date_time,
+            ]);
+            if ($images = $request->file('images')) {
+                foreach ($images as $image) {
+                    $product->addMedia($image)
+                        ->usingName($product->name)
+                        ->toMediaCollection('images');
+                }
             }
-        }
-        return response()->json([]);
+        DB::commit();
+       }catch(Throwable $th){
+        DB::rollBack();
+        return $th;
+       }
     }
     public function update(UpdateProductRequest $request){
 
-        $id = $request->id;
-        $find = Product::findOrFail($id);
-        $find->update([
-            'name'=>$request->name,
-            'category'=>$request->category,
-            'description'=>$request->description,
-            'created_at'=>$request->date_time,
-        ]);
+        try{
+            DB::beginTransaction();
+                $id = $request->id;
+                $find = Product::findOrFail($id);
+                $find->update([
+                    'name'=>$request->name,
+                    'category'=>$request->category,
+                    'description'=>$request->description,
+                    'created_at'=>$request->date_time,
+                ]);
 
-        if($images = $request->file('images')){
-                if ($request->hasFile('images') ) {
-                    $find->clearMediaCollection('images');
-                }
-                foreach($images as $image){
-                     $find->addMedia($image)
-                    ->usingName($find->name)
-                    ->toMediaCollection('images');
-                }
-
-            }
+                if($images = $request->file('images')){
+                        if ($request->hasFile('images') ) {
+                            $find->clearMediaCollection('images');
+                        }
+                        foreach($images as $image){
+                            $find->addMedia($image)
+                            ->usingName($find->name)
+                            ->toMediaCollection('images');
+                        }
+                    }
+            DB::commit();
+        }catch(Throwable $th){
+            DB::rollBack();
+            return $th;
+        }
 
     }
     public function destroy($id){
