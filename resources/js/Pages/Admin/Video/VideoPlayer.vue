@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <video class="video-js vjs-theme-dt  " ref="videoPlayer" ></video>
+  <div class="border-4 border-red-500" >
+    <video  ref="videoPlayer" class="video-js vjs-theme-dt" />
   </div>
 </template>
 
@@ -24,15 +24,18 @@ export default {
   },
   methods: {
     updatePlayerSource(newUrl) {
+
       if (this.player) {
         this.player.dispose();
       }
+
       this.initializePlayer(newUrl);
     },
     initializePlayer(newUrl) {
-      const videoPlayerElement = this.$refs.videoPlayer;
+      var videoPlayerElement = videojs.dom.createEl('video',{ref:'videoPlayer'});
       this.player = videojs(videoPlayerElement, {
-        controls: true,
+        controls: false,
+        autoplay: true,
         sources: [{ src: newUrl, type: 'video/mp4' }],
       }, () => {
         this.player.log('onPlayerReady', this);
@@ -45,7 +48,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.videoUrl);
     this.$nextTick(() => {
       this.initializePlayer(this.props.videoUrl);
     });
