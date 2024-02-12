@@ -26,6 +26,18 @@ const links = [
         route: 'videos',
         base_route: 'videos',
     },
+    {
+        label: 'Ecommerce',
+        icon: '',
+        route:'praxxys-ecommerce',
+        base_route: 'praxxys-ecommerce'
+    },
+    {
+        label: 'Cart',
+        icon: '',
+        route:'cart',
+        base_route: 'cart'
+    },
 
 ];
 
@@ -39,7 +51,7 @@ const links = [
         <ul class="h-full mt-6">
             <template v-for="link in links">
                 <li v-if="link.access ? isInRole(link.access) : true"
-                    class="mb-2 cursor-pointer hover:bg-white-100  hover:font-semibold p-2 px-4 rounded-lg"
+                    class="p-2 px-4 mb-2 rounded-lg cursor-pointer hover:bg-white-100 hover:font-semibold"
                     :class="{'bg-primary-100 font-semibold': route().current(link.base_route)}"
                 >
                     <Link :href="route(link.route)" class="flex gap-4"

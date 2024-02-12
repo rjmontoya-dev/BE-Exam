@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Ecommerce\CartController;
+use App\Http\Controllers\Ecommerce\EcommerceController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -39,4 +42,11 @@ Route::middleware([
     Route::get('videos',function (){
         return inertia('Admin/Video/Index');
     })->name('videos');
+   
+    Route::get('praxxys-ecommerce',[EcommerceController::class,'index'])->name('praxxys-ecommerce');
+    Route::get('cart',[CartController::class, 'index'])->name('cart');
+
+    Route::post('payment',[PaymentController::class,'pay'])->name('payment');
+    Route::get('success', [PaymentController::class, 'success']);
+    Route::get('error', [PaymentController::class, 'error']);
 });
