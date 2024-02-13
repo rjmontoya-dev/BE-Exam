@@ -34,7 +34,7 @@ onMounted(()=>{
         <div>
             <span v-for="product in productList.data" :key="product.id"> 
                 <a href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ product.name }}</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ product.name }} <span class="ml-10 text-gray-500">Price: {{ product.price }}</span></h5>
                     <span v-for="(image) in product.media">
                         <img class="flex object-cover h-20 rounded w-18" :src="returnImagePath(image.original_url)" >
                     </span>

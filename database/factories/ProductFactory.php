@@ -22,6 +22,7 @@ class ProductFactory extends Factory
             'name'=> $this->faker->word,
             'category'=>$this->faker->word,
             'description'=> $this->faker->paragraph,
+            'price'=>$this->faker->randomDigit,
         ];
     }
 }

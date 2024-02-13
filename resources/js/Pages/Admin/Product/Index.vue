@@ -70,21 +70,21 @@ onMounted(()=>{
 </script>
 <template>
     <AuthenticatedLayout>
-        <div class="relative overflow-x-hidden bg-gray-200 rounded-md px-8 py-8">
-             <Link :href="route('create-products')" class="ml-auto bg-blue-500 px-2 py-2 rounded-md text-white mb-10">
+        <div class="relative px-8 py-8 overflow-x-hidden bg-gray-200 rounded-md">
+             <Link :href="route('create-products')" class="px-2 py-2 mb-10 ml-auto text-white bg-blue-500 rounded-md">
             Create Product
         </Link>
             <div class="mt-8 mb-2">
-                <label class="text-gray-500 italic">Search: </label>
+                <label class="italic text-gray-500">Search: </label>
                 <TextInput type="text" :modelValue="search" @update:modelValue="search = $event"></TextInput>
-                <label class="text-gray-500 italic"> Filter by category: </label>
-                <select class="h-9 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" v-model="filtercategory">
+                <label class="italic text-gray-500"> Filter by category: </label>
+                <select class="border-gray-300 rounded-md shadow-sm h-9 focus:border-indigo-500 focus:ring-indigo-500" v-model="filtercategory">
                       <option value="" disabled>--Select--</option>
                     <option v-for="product in productList.data">{{ product.category }}</option>
                 </select>
             </div>
 
-            <table class="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table class="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
@@ -98,6 +98,9 @@ onMounted(()=>{
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Description
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Price
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Date & TIme
@@ -117,10 +120,11 @@ onMounted(()=>{
                         <td class="px-6 py-4">{{ product.name }}</td>
                         <td class="px-6 py-4">{{ product.category }}</td>
                         <td class="px-6 py-4">{{ product.description }}</td>
+                        <td class="px-6 py-4">{{ product.price }}</td>
                         <td class="px-6 py-4">{{ formatDateForInput(product.created_at )}}</td>
                         <td class="px-6 py-4" >
                             <span v-for="(image,index) in product.media">
-                                <img class=" flex rounded w-18 h-10 object-cover" :src="returnImagePath(image.original_url)" >
+                                <img class="flex object-cover h-10 rounded w-18" :src="returnImagePath(image.original_url)" >
                             </span>
                         </td>
                         <td class="px-6 py-4"><a @click="removeItem(product.id)"><i class="text-red-500 bi bi-trash"></i></a>
@@ -130,11 +134,11 @@ onMounted(()=>{
                     </template>
                     <template v-else>
                       <tr>
-                        <td colspan="99" class="text-center py-6 px-3 text-sm text-gray-600">
-                            <div class="flex justify-center items-center">
+                        <td colspan="99" class="px-3 py-6 text-sm text-center text-gray-600">
+                            <div class="flex items-center justify-center">
                             <div class="">
                                 <img class="w-[10rem] opacity-40" src="/image/default/empty-box.png">
-                                <p class="text-gray-300 text-lg mt-3">Data not found</p>
+                                <p class="mt-3 text-lg text-gray-300">Data not found</p>
                             </div>
                             </div>
                         </td>
@@ -145,13 +149,13 @@ onMounted(()=>{
             <div>
 
             </div>
-            <nav class="mt-4 block sm:flex items-center text-center justify-between pt-0" aria-label="Table navigation">
+            <nav class="items-center justify-between block pt-0 mt-4 text-center sm:flex" aria-label="Table navigation">
                 <span class="text-sm text-gray-500">Showing <span class="">{{ `${productList.from ?? '0'} to ${productList.to ?? '0'}` }}</span> of <span
                 class="">{{ productList.total }}</span><span> entries</span></span>
                 <nav>
-                    <ul class="flex items-center justify-center gap-1  h-8 text-sm">
+                    <ul class="flex items-center justify-center h-8 gap-1 text-sm">
                         <li >
-                            <a @click="pageButton(productList.prev_page_url)" class="flex items-center rounded-full justify-center link px-3 h-8 w-8 ml-0 leading-tight text-gray-500 bg-white hover:text-gray-500 hover:bg-blue-300 border border-gray-300 "
+                            <a @click="pageButton(productList.prev_page_url)" class="flex items-center justify-center w-8 h-8 px-3 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-full link hover:text-gray-500 hover:bg-blue-300 "
                                 >
                                 <i class="bi bi-chevron-left"></i>
                             </a>
@@ -160,13 +164,13 @@ onMounted(()=>{
                             <li v-if="!isNaN(link.label)">
                                 <a
                                     :class="{ 'active !bg-blue-500 text-white hover:!bg-blue-300 ': link.active }"
-                                    class="cursor-pointer flex items-center rounded-full justify-center px-4 w-8 h-8  text-gray-500 bg-white border border-gray-300   hover:text-gray-700"
+                                    class="flex items-center justify-center w-8 h-8 px-4 text-gray-500 bg-white border border-gray-300 rounded-full cursor-pointer hover:text-gray-700"
                                     @click="pageButton(link.url)"  >{{ link.label }}
                                 </a>
                             </li>
                         </template>
                         <li >
-                            <a @click="pageButton(productList.next_page_url)" class="flex items-center rounded-full justify-center link px-3 h-8 w-8 ml-0 leading-tight text-gray-500 bg-white hover:text-gray-500 hover:bg-blue-300 border border-gray-300 "
+                            <a @click="pageButton(productList.next_page_url)" class="flex items-center justify-center w-8 h-8 px-3 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-full link hover:text-gray-500 hover:bg-blue-300 "
                                >
                                     <i class="bi bi-chevron-right"></i>
                             </a>

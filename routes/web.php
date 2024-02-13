@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Ecommerce\CartController;
-use App\Http\Controllers\Ecommerce\EcommerceController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\EcommerceController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
@@ -47,6 +47,5 @@ Route::middleware([
     Route::get('cart',[CartController::class, 'index'])->name('cart');
 
     Route::post('payment',[PaymentController::class,'pay'])->name('payment');
-    Route::get('success', [PaymentController::class, 'success']);
-    Route::get('error', [PaymentController::class, 'error']);
+    Route::get('success', [PaymentController::class, 'success']); 
 });
