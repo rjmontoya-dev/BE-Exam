@@ -26,6 +26,7 @@ class PaymentController extends Controller
                 'requestReferenceNumber'=> "5fc10b93-bdbd-4f31-b31d-4575a3785009",
                 "redirectUrl"=> [
                     "success"=> "http://127.0.0.1:8000/success", 
+                    "failure"=> "http://127.0.0.1:8000/failed",
                 ],
             ];
             $response = Curl::to('https://pg-sandbox.paymaya.com/checkout/v1/checkouts')
@@ -43,7 +44,10 @@ class PaymentController extends Controller
     }
     public function success()
     {
-        $find = Cart::where('user_id',Auth::id())->delete(); 
+        Cart::where('user_id',Auth::id())->delete(); 
         return inertia('Admin/Ecommerce/Cart/Index',['message'=>"Paid"]);
+    }
+    public function failed(){
+        return inertia('Admin/Ecommerce/Cart/Index',['message'=>"Fail to pay"]);
     }
 }

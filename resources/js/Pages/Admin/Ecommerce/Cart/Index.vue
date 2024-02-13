@@ -4,12 +4,12 @@ import {useForm,usePage,router} from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';  
 import {getTotalAmount} from '@/Composables/helper/TotalAmount.js';
 const cartListItems =  ref([]);  
-const paymentMess = computed(()=>usePage().props.message);
+const paymentMess = computed(()=>usePage().props.message );
  
 const form  = useForm({
     total_amount : 0,
 });
-const removeItem=async (id)=>{
+const removeItem = async (id) =>{
     const response =  await axios.delete(`api/cart/removeToCart/${id}`);
     cartListItems.value = response.data.cartListItems;
     form.total_amount = getTotalAmount(cartListItems); 
@@ -37,8 +37,9 @@ onMounted(()=>{
 <template>
     <AuthenticatedLayout>
         <div v-if="paymentMess">
-            <div class="px-10 py-10 bg-green-200">{{ paymentMess }}</div>      
+            <div class="px-10 py-10 bg-info-200">{{ paymentMess }}</div>      
         </div>
+        {{ paymentMess }}
         <div class="flex">
             <span v-for="cartItem in cartListItems" :key="cartItem.id"> 
              <a  href="#" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">

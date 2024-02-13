@@ -48,4 +48,5 @@ Route::middleware([
 
     Route::post('payment',[PaymentController::class,'pay'])->name('payment');
     Route::get('success', [PaymentController::class, 'success']); 
+    Route::get('failed', [PaymentController::class, 'failed']); 
 });
