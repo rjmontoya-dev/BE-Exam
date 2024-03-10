@@ -37,3 +37,16 @@ Route::prefix('cart')->name('cart.')->group(function (){
 }); 
 
 Route::get('videolist',[VideoController::class,'list'])->name('videolist');
+
+
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('sample-test', function (){
+        return response()->json("hii hello");
+    })->name('sample-test');
+});

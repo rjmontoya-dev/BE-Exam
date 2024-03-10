@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\EcommerceController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TypeScriptController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,13 +30,14 @@ Route::get('/', function () {
 });
 
 Route::middleware([
-    'auth:sanctum',
+    // 'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+   
     Route::get('products',[ProductController::class,'index'])->name('products');
     Route::get('create-products',[ProductController::class,'create'])->name('create-products');
     Route::get('edit-products/{id}',[ProductController::class,'edit'])->name('edit-products');
@@ -49,4 +51,6 @@ Route::middleware([
     Route::post('payment',[PaymentController::class,'pay'])->name('payment');
     Route::get('success', [PaymentController::class, 'success']); 
     Route::get('failed', [PaymentController::class, 'failed']); 
+
+    Route::get('TypeScriptTest',[TypeScriptController::class,'index'])->name('TypeScriptTest');
 });

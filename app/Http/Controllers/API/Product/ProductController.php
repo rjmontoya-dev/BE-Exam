@@ -13,6 +13,7 @@ use Throwable;
 
 class ProductController extends Controller
 {
+   
     public function list(Request $request){
         $products = Product::with('media')
         ->where(function ($query) use ($request){
